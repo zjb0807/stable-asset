@@ -23,7 +23,7 @@ use frame_support::{
 	traits::{
 		fungibles::{Dust, Inspect, Mutate, Unbalanced},
 		tokens::{DepositConsequence, Fortitude, Precision, Preservation, Provenance, WithdrawConsequence},
-		ConstU128, ConstU32, Currency, EnsureOrigin, OnUnbalanced,
+		ConstU128, ConstU32, EnsureOrigin,
 	},
 	PalletId,
 };
@@ -64,6 +64,7 @@ impl pallet_balances::Config for Test {
 	type RuntimeFreezeReason = RuntimeFreezeReason;
 	type FreezeIdentifier = ();
 	type MaxFreezes = ();
+	type DoneSlashHandler = ();
 }
 
 pub type Balance = u128;
@@ -229,12 +230,6 @@ impl Unbalanced<AccountId> for TestAssets {
 		todo!()
 	}
 }
-
-pub struct EmptyUnbalanceHandler;
-
-type Imbalance = <pallet_balances::Pallet<Test> as Currency<AccountId>>::NegativeImbalance;
-
-impl OnUnbalanced<Imbalance> for EmptyUnbalanceHandler {}
 
 pub struct EnsureStableAsset;
 impl EnsureOrigin<RuntimeOrigin> for EnsureStableAsset {
