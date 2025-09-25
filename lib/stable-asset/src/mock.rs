@@ -261,7 +261,6 @@ parameter_types! {
 }
 
 impl stable_asset::Config for Test {
-	type RuntimeEvent = RuntimeEvent;
 	type AssetId = i64;
 	type Balance = Balance;
 	type Assets = TestAssets;
