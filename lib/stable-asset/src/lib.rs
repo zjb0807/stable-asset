@@ -1633,22 +1633,13 @@ impl<T: Config> StableAsset for Pallet<T> {
 				if *amount == Zero::zero() {
 					continue;
 				}
-				let a = T::Assets::transfer(
+				T::Assets::transfer(
 					pool_info.assets[i],
 					who,
 					&pool_info.account_id,
 					*amount,
 					Preservation::Expendable,
-				);
-				if a.is_err() {
-					panic!(
-						"{:?}, {:?}, {:?}, {:?}",
-						i,
-						pool_info.assets[i],
-						amount,
-						T::Assets::balance(pool_info.assets[i], &pool_info.account_id)
-					);
-				}
+				)?;
 			}
 			let zero: T::Balance = Zero::zero();
 			if fee_amount > zero {
